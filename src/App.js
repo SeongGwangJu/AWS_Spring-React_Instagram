@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Route, Routes } from 'react-router';
+import RootLayout from './components/Layouts/RootLayout/RootLayout';
+import Sidebar from './components/Sidebar/Sidebar';
+import { Reset } from 'styled-reset';
 
-function App() {
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RootLayout>
+      <Sidebar />
+      <Reset />
+      <Routes>
+        <Route path='' element={<div></div>} />
+        <Route path='/:username' element={<div></div>} />
+        <Route path='/explore' element={<div></div>} />
+      </Routes>
+    </RootLayout>
   );
 }
 
