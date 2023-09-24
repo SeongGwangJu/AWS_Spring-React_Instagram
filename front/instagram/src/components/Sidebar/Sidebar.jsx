@@ -20,6 +20,9 @@ function Sidebar(props) {
         setIsSelectedList([false, true, false, false])
     }
 
+    const forMerge = () => {
+        
+    }
     const handleAddContentClick = () => {
         setIsSelectedList([false, false, true, false])
     }
