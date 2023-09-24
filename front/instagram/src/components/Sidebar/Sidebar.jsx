@@ -21,13 +21,13 @@ function Sidebar(props) {
     }
 
     const forMerge = () => {
-        
+        // ddd
     }
     const handleAddContentClick = () => {
         setIsSelectedList([false, false, true, false])
     }
     
-    // test 
+    
 
     const handleProfileClick = () => {
         setIsSelectedList([false, false, false, true])
