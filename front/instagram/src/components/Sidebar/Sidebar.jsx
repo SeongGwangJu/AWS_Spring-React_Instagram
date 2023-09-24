@@ -23,6 +23,8 @@ function Sidebar(props) {
     const handleAddContentClick = () => {
         setIsSelectedList([false, false, true, false])
     }
+    
+    // test 
 
     const handleProfileClick = () => {
         setIsSelectedList([false, false, false, true])
