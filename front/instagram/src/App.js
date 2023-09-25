@@ -4,7 +4,6 @@ import RootLayout from './components/Layouts/RootLayout/RootLayout';
 import Sidebar from './components/Sidebar/Sidebar';
 import { Reset } from 'styled-reset';
 import Signup from './pages/Signup/Signup';
-import Signin from './pages/Signin/Signin';
 
 function App(props) {
   return (
@@ -14,7 +13,6 @@ function App(props) {
       <Routes>
         <Route path='' element={<div></div>} />
         <Route path='/accounts/emailsignup' element={<Signup />} />
-        <Route path='/accounts/login' element={<Signin />} />
         <Route path='/:username' element={<div></div>} />
         <Route path='/explore' element={<div></div>} />
       </Routes>
