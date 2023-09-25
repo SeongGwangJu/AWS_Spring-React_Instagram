@@ -5,8 +5,11 @@ import SigninAndUpLayout from "../../components/SigninAndUpLayout/SigninAndUpLay
 import Top from "../../components/SigninAndUpLayout/Top/Top";
 import Input from "../../components/SigninAndUpLayout/Input/Input";
 import OrBar from "../../components/SigninAndUpLayout/OrBar/OrBar";
+import { signup } from "../../apis/api/account";
+import { useNavigate } from "react-router";
 
 function Signup(props) {
+	const navigate = useNavigate();
 
 	const empytAccount = {
 		phoneAndEmail: "",
@@ -17,6 +20,7 @@ function Signup(props) {
 
 	const [account, setAccount] = useState(empytAccount);
 	const [isAccountValuesEmpty, setIsAccountValuesEmpty] = useState(true);
+	const [errorMsg, setErrorMsg ] = useState("");
 
 	const changeAccount = (name, value) => {
 		setAccount({
@@ -29,9 +33,27 @@ function Signup(props) {
 		setIsAccountValuesEmpty(Object.values(account).includes(""));
 	}, [account]);
 
-	const handleSignupSubmit = () => {
-		Signup(account);
+	const handleSignupSubmit = async () => {
+		try{
+			const response = await signup(account);
+			navigate("/accounts/login");
+		} catch(error) {
+			const responseErrorMsg = error.response.data;
+			const keys = Object.keys(responseErrorMsg);
+			if(keys.includes("username")) {
+				setErrorMsg(responseErrorMsg.username);
+			}else if(keys.includes("phoneAndEmail")) {
+				setErrorMsg(responseErrorMsg.phoneAndEmail)
+			}else if(keys.includes("name")) {
+				setErrorMsg(responseErrorMsg.name)
+			}else if(keys.includes("password")) {
+				setErrorMsg(responseErrorMsg.password)
+			}
+		}
+			//key값들만 list로 뺀다.
+			setErrorMsg();
 	}
+	
 
 	return (
 		<SigninAndUpLayout>
@@ -52,9 +74,12 @@ function Signup(props) {
 					<Input placeholder={"성명"} name={"name"} changeAccount={changeAccount}/>
 					<Input placeholder={"사용자 이름"} name={"username"} changeAccount={changeAccount} />
 					<Input type={"password"} placeholder={"비밀번호"} name={"password"} changeAccount={changeAccount} />
-					<button disabled={isAccountValuesEmpty}>
+					<button /*disabled={isAccountValuesEmpty}*/ onClick={handleSignupSubmit}>
                         가입
                     </button>
+					<div>
+						{errorMsg}
+					</div>
 				</div>
 			</Top>
 		</SigninAndUpLayout>

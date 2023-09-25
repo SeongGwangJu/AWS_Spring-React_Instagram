@@ -1,27 +1,62 @@
 import React, { useEffect, useRef, useState } from "react";
 /** @jsxImportSource @emotion/react */
 import * as S from "./Style";
-function Input({ type, placeholder, name,changeAccount }) {
+import { NAME, PASSWORD, PHONE_AND_EMAIL, USERNAME } from "../../../constants/regex";
+import {BsCheckCircle} from 'react-icons/bs';
+import {ImCancelCircle} from 'react-icons/im';
+
+function Input({ type, placeholder, name, changeAccount }) {
 	const [isEmpty, SetIsEmpty] = useState(true);
-    const [ inputValue, setInputValue ] = useState("");
+	const [inputValue, setInputValue] = useState("");
+	const [ inputState, setInputState ] =  useState("");
 
 	const handleInputChange = (e) => {
-        setInputValue(e.target.value);
-		changeAccount(e.target.name, e.target.value)
-    };
+		setInputValue(e.target.value);
+		changeAccount(e.target.name, e.target.value);
+	};
 
-    useEffect(() => {
-        SetIsEmpty(!inputValue);
-    }, [inputValue])
+	const handleInputOnBlur = (e) => {
+		const value = e.target.value;
+		let regex = null;
+
+		switch(e.target.name) {
+			case "phoneAndEmail" : regex = PHONE_AND_EMAIL; break;
+			case "name" : regex = NAME; break;
+			case "username" : regex = USERNAME; break;
+			case "password" : regex = PASSWORD; break;
+			default: console.log();
+		}
+
+		if(!regex.test(value)) {
+			console.log(`${e.target.name}, 매칭되지 않음`);
+			setInputState(<>< ImCancelCircle /></>)
+			return;
+		}
+
+		setInputState(<>< BsCheckCircle /></>);
+	}
+	const handleInputOnFocus = () => {
+		setInputState("");
+	}
+
+	useEffect(() => {
+		SetIsEmpty(!inputValue);
+	}, [inputValue]);
 
 	return (
 		<div css={S.SLayout}>
 			<label css={S.SInput(isEmpty)}>
-				<input type={type} name={name} onChange={handleInputChange} />
+				<input
+					type={type}
+					name={name}
+					onChange={handleInputChange}
+					onBlur={handleInputOnBlur}
+					onFocus={handleInputOnFocus}
+				/>
 				<span>{placeholder}</span>
 			</label>
 			<div css={S.SStateBox}>
-				
+				{inputState}
 			</div>
 		</div>
 	);
@@ -30,7 +65,7 @@ function Input({ type, placeholder, name,changeAccount }) {
 Input.defaultProps = {
 	type: "text",
 	placeholder: "",
-	name : ""
-}
+	name: "",
+};
 
 export default Input;
