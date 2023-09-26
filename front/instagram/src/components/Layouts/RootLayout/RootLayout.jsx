@@ -2,7 +2,7 @@ import React from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from './Style'
 
-function RootLayout( {children} ) {
+function RootLayout({ children }) {
     return (
         <div css ={S.SLayout}>
             {children}

@@ -1,36 +1,72 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
-import * as S from "./Style";
-function Input({ type, placeholder, name,changeAccount }) {
-	const [isEmpty, SetIsEmpty] = useState(true);
-    const [ inputValue, setInputValue ] = useState("");
+import * as S from './Style';
+import { NAME, PASSWORD, PHONE_OR_EMAIL, USERNAME } from '../../../constants/regex';
+import { ImCancelCircle } from "react-icons/im";
+import { BsCheckCircle } from "react-icons/bs";
 
-	const handleInputChange = (e) => {
+function Input({ type, placeholder, name, changeAccount }) {
+    const [ isEmpty, setIsEmpty ] = useState(true);
+    const [ inputValue, setInputValue ] = useState("");
+    const [ inputState, setInputState ] = useState("");
+
+    const handleInputChange = (e) => {
         setInputValue(e.target.value);
-		changeAccount(e.target.name, e.target.value)
-    };
+        changeAccount(e.target.name, e.target.value);
+    }
+
+    const handleInputOnblur = (e) => {
+        const value = e.target.value;
+        let regex = null;
+
+        switch(e.target.name) {
+            case "phoneOrEmail": regex = PHONE_OR_EMAIL; break;
+            case "name": regex = NAME; break;
+            case "username": regex = USERNAME; break;
+            case "password": regex = PASSWORD; break;
+            default: regex = null;
+        }
+
+        if(!!regex && !regex.test(value)) {
+            setInputState(<><ImCancelCircle /></>);
+
+        }else if(!!regex && regex.test(value)) {
+            setInputState(<><BsCheckCircle /></>);
+
+        }else {
+            setInputState("");
+        }
+
+    }
+
+    const handleInputOnFocus = () => {
+        setInputState("");
+    }
 
     useEffect(() => {
-        SetIsEmpty(!inputValue);
+        setIsEmpty(!inputValue);
     }, [inputValue])
 
-	return (
-		<div css={S.SLayout}>
-			<label css={S.SInput(isEmpty)}>
-				<input type={type} name={name} onChange={handleInputChange} />
-				<span>{placeholder}</span>
-			</label>
-			<div css={S.SStateBox}>
-				
-			</div>
-		</div>
-	);
+    return (
+        <div css={S.SLayout}>
+            <label css={S.SInput(isEmpty)}>
+                <input type={type} name={name}
+                onChange={handleInputChange}
+                onBlur={handleInputOnblur}
+                onFocus={handleInputOnFocus} />
+                <span>{placeholder}</span>
+            </label>
+            <div css={S.SStateBox}>
+                {inputState}
+            </div>
+        </div>
+    );
 }
 
 Input.defaultProps = {
-	type: "text",
-	placeholder: "",
-	name : ""
+    type: "text",
+    placeholder: "",
+    name: ""
 }
 
 export default Input;

@@ -17,9 +17,6 @@ export const SOrBar = css`
 
     &::before, &::after {
         content: '';
-        width: 105px;
-        height: 1px;
-        background-color: #dbdbdb;
         flex-grow: 1;
         border-bottom: 1px solid #dbdbdb;
 

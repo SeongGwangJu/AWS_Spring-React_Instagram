@@ -5,6 +5,5 @@ export const SLayout = css`
     border: 1px #dbdbdb;
     width: 768px;
     height: 800px;
-    background-color: #fafafa;
     box-shadow: 0px 0px 30px 0px;
 `;

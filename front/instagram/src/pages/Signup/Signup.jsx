@@ -1,36 +1,57 @@
 import React, { useEffect, useState } from "react";
-// /** @jsxImportSource @emotion/react */
-// import * as S from './Style'
+/** @jsxImportSource @emotion/react */
+import * as S from './Style'
 import SigninAndUpLayout from "../../components/SigninAndUpLayout/SigninAndUpLayout";
 import Top from "../../components/SigninAndUpLayout/Top/Top";
 import Input from "../../components/SigninAndUpLayout/Input/Input";
 import OrBar from "../../components/SigninAndUpLayout/OrBar/OrBar";
+import { useNavigate } from "react-router";
+import { signup } from "../../apis/api/account";
 
 function Signup(props) {
 
-	const empytAccount = {
-		phoneAndEmail: "",
+	const navigate = useNavigate();
+
+	const emptyAccount = {
+		phoneOrEmail: "",
 		name: "",
 		username: "",
-		password: "",
-	};
-
-	const [account, setAccount] = useState(empytAccount);
-	const [isAccountValuesEmpty, setIsAccountValuesEmpty] = useState(true);
+		password: ""
+	}
+	const [ account, setAccount ] = useState(emptyAccount);
+	const [ isAccountValuesEmpty, setIsAccountValuesEmpty ] = useState(true);
+	const [ errorMsg, setErrorMsg ] = useState("");
 
 	const changeAccount = (name, value) => {
 		setAccount({
 			...account,
-			[name]: value,
+			[name]: value
 		});
-	};
+	}
 
 	useEffect(() => {
-		setIsAccountValuesEmpty(Object.values(account).includes(""));
-	}, [account]);
+		setIsAccountValuesEmpty(Object.values(account).includes(""))
+	}, [account])
 
-	const handleSignupSubmit = () => {
-		Signup(account);
+	const handleSignupSubmit = async () => {
+		try{
+			await signup(account);
+			navigate("/accounts/login");
+
+		} catch(error) {
+			const responseErrorMsg = error.response.data;
+			const keys = Object.keys(responseErrorMsg);
+
+			if(keys.includes("username")) {
+				setErrorMsg(responseErrorMsg.username);
+			}else if(keys.includes("phoneOrEmail")) {
+				setErrorMsg(responseErrorMsg.phoneOrEmail);
+			}else if(keys.includes("name")) {
+				setErrorMsg(responseErrorMsg.name);
+			}else if(keys.includes("password")) {
+				setErrorMsg(responseErrorMsg.password);
+			}
+		}
 	}
 
 	return (
@@ -46,15 +67,22 @@ function Signup(props) {
 					<OrBar />
 					<Input
 						placeholder={"휴대폰 번호 또는 이메일 주소"}
-						name={"phoneAndEmail"}
+						name={"phoneOrEmail"}
 						changeAccount={changeAccount}
 					/>
-					<Input placeholder={"성명"} name={"name"} changeAccount={changeAccount}/>
+					<Input placeholder={"성명"} name={"name"} changeAccount={changeAccount} />
 					<Input placeholder={"사용자 이름"} name={"username"} changeAccount={changeAccount} />
 					<Input type={"password"} placeholder={"비밀번호"} name={"password"} changeAccount={changeAccount} />
-					<button disabled={isAccountValuesEmpty}>
-                        가입
-                    </button>
+					<div  css={S.SBtnLayout}>
+						<button onClick={handleSignupSubmit}
+						disabled={isAccountValuesEmpty}
+						css={S.SBtn}>
+							가입
+						</button>
+					</div>
+					<div>
+						{errorMsg}
+					</div>
 				</div>
 			</Top>
 		</SigninAndUpLayout>

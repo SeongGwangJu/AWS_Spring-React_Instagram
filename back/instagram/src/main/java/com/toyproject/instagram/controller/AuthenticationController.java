@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class AccountController {
+public class AuthenticationController {
 
 	private final UserService userService;
 
@@ -23,11 +25,23 @@ public class AccountController {
 	public ResponseEntity<?> signup(@Valid @RequestBody SignupReqDto signupReqDto, BindingResult bindingResult) {
 
 		if(bindingResult.hasErrors()) {
+			Map<String, String> errorMap = new HashMap<>();
 			bindingResult.getFieldErrors().forEach(error -> {
-				System.out.println(error.getDefaultMessage());
+				errorMap.put(error.getField(), error.getDefaultMessage());
 			});
+
+			throw new SignupException(errorMap);
 		}
+
 		userService.signupUser(signupReqDto);
+		return ResponseEntity.ok(null);
+	}
+
+	@PostMapping("/login")
+	public ResponseEntity<?> signin(@RequestBody SignupReqDto signupReqDto) {
+
+		userService.signupUser(signupReqDto);
+
 		return ResponseEntity.ok(null);
 	}
 }
