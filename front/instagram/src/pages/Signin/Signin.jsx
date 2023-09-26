@@ -8,6 +8,7 @@ import Input from '../../components/SigninAndUpLayout/Input/Input';
 import OrBar from '../../components/SigninAndUpLayout/OrBar/OrBar';
 import { signin } from '../../apis/api/account';
 import {RiKakaoTalkFill} from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 
 function Signin(props) {
     const navigate = useNavigate();
@@ -43,19 +44,20 @@ function Signin(props) {
     return (
         <SigninAndUpLayout>
             <Top>
-                <div>
+                <div css={S.SLayout}>
                     <Input placeholder={"전화번호, 사용자이름 또는 이메일"} name={"phoneOrEmailOrUsername"} changeAccount={changeAccount}/>
                     <Input placeholder={"비밀번호"} type={"password"} name={"loginPassword"} changeAccount={changeAccount}/>
-                    <div css={S.SBtnLayout}>
                     <button onClick={handleSigninSubmit} disabled={isAccountValuesEmpty} css={S.SLoginBtn}>로그인</button>
-                    </div>
                     <OrBar />
-                    <div css={S.SBtnLayout}>
                         <button css={S.SKakaoLoginBtn}><RiKakaoTalkFill/> kakao 로그인</button>
-                    </div>
                     <div>
                         {errorMsg}
                     </div>
+                    <div>
+                    비밀번호를 잊으셨나요?
+                    </div>
+
+                    <Link to="/accounts/emailsignup"> 가입하기 </Link>
                 </div>
             </Top>
         </SigninAndUpLayout>

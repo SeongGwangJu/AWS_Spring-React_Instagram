@@ -17,11 +17,13 @@ export const SInput = (isEmpty) => css`
 	flex-grow: 1;
 	padding: ${isEmpty ? " 9px 0px 7px 6px; " : "14px 0px 7px 2px"};
 	transition: all 0.1s ease;
-
+	
+	
 	& > input {
 		border: none;
 		outline: none;
 		height: 20px;
+		width: 230px;
 		background-color: transparent;
 	}
 

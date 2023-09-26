@@ -1,5 +1,6 @@
 package com.toyproject.instagram.config;
 
+import com.toyproject.instagram.exception.AuthenticateExceptionEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity  // 현재 내가 만든 시큐리티 설정 정책을 따르겠다.(기본설정이 존재함)
 @Configuration
@@ -15,11 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final AuthenticateExceptionEntryPoint authenticateExceptionEntryPoint;
+
 	//암호화
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors();    // cors정책을 따름
@@ -33,7 +35,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.exceptionHandling()
 				.authenticationEntryPoint(authenticateExceptionEntryPoint);
-
-
 	}
 }

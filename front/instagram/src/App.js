@@ -13,8 +13,9 @@ function App(props) {
       {/* <Sidebar /> */}
       <Reset />
       <Routes>
-        <Route path='' element={<div></div>} />
+        <Route path='' element={<Signin />} />
         <Route path='/accounts/emailsignup' element={<Signup />} />
+        <Route path='' element={<Signup />} />
         <Route path='/accounts/login' element={ <AuthRoute element={ <Signin/> }/> } />
         <Route path='/:username' element={<div></div>} />
         <Route path='/explore' element={<div></div>} />
