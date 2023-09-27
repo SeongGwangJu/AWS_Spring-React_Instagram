@@ -7,6 +7,7 @@ import Input from "../../components/SigninAndUpLayout/Input/Input";
 import OrBar from "../../components/SigninAndUpLayout/OrBar/OrBar";
 import { useNavigate } from "react-router";
 import { signup } from "../../apis/api/account";
+import {RiKakaoTalkFill} from 'react-icons/ri';
 
 function Signup(props) {
 
@@ -62,7 +63,7 @@ function Signup(props) {
                         친구들의 사진과 동영상을 보려면 가입하세요.
                     </div>
 					<button css={S.SKakaoLoginBtn}>
-                        kakao로 로그인
+						<RiKakaoTalkFill/> kakao로 로그인
                     </button>
 					<OrBar />
 					<Input
