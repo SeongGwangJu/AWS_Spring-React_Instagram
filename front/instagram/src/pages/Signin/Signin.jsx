@@ -35,7 +35,9 @@ function Signin(props) {
 
     const handleSigninSubmit = async () => {
         try {
-            await signin(account);
+            const response = await signin(account);
+            localStorage.setItem("accessToken", "Bearer " + response.data);
+            navigate("/");
         } catch(error) {
             setErrorMsg(error.response.data.errorMessage);
         }

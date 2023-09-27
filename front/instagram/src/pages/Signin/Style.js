@@ -5,6 +5,7 @@ export const SLayout = css`
     justify-content: center;
     align-items: center;
     font-size: 12px;
+    line-height: 18px;
 `;
 
 export const SLoginBtn = css`
@@ -19,6 +20,10 @@ export const SLoginBtn = css`
     text-align: center;
     font-size: 14px;
     cursor: pointer;
+
+    &:active, :hover {
+        background-color: #1877f2;
+    }
 `;
 
 export const SKakaoLoginBtn = css`
@@ -34,4 +39,8 @@ export const SKakaoLoginBtn = css`
     text-align: center;
     font-size: 14px;
     cursor: pointer;
+    &:active, :hover {
+        background-color: #fada0a;
+    }
+
 `;
