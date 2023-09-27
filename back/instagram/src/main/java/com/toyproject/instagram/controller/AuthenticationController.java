@@ -44,9 +44,9 @@ public class AuthenticationController {
 
     //Cl이 JWT 토큰을 포함한 Authorization 헤더로 요청을 보낼 때 호출되는 EndPoint
     @GetMapping("/authenticate")
-    public ResponseEntity<?> authenticate(@RequestHeader(value = "Authorization") String authorization) {
-        System.out.println("토큰 : " + authorization);
+    public ResponseEntity<?> authenticate(@RequestHeader(value = "Authorization") String token) {
+        System.out.println("토큰 : " + token);
 //        토큰 검증 후 결과에따라 응답 반환
-        return ResponseEntity.ok(false);
+        return ResponseEntity.ok(userService.authenticate(token));
     }
 }

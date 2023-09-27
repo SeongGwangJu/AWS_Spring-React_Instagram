@@ -11,10 +11,13 @@ function AuthRoute({ element }) {
     // 처음 렌더링 될 때 user인증 수행.
     useEffect(() => { //Promise도 쓸 수 있어야함.
         authenticate()
-        .then(response => {
-            setAuthenticated(response.data); //data는 boolean타입으로 반환되어짐
+        .then(response => { //data는 boolean타입으로 반환=>true면 실행
+            setAuthenticated(response.data);
         })
-        setAuthenticated();
+        .catch(error => {
+            alert("error.response.data")
+            setAuthenticated(false);
+        })
     }, []);
 
     for(let path of permitAllPath) {

@@ -36,17 +36,17 @@ public class AuthenticateExceptionEntryPoint implements AuthenticationEntryPoint
 
     private String getErrorMessage(AuthenticationException authException) {
         if(authException.getClass() == BadCredentialsException.class) {
-            return "잘못된 사용자 정보입니다. 다시 확인하세요.";
+            return "BadCredentialsException 잘못된 사용자 정보입니다. 다시 확인하세요.";
         }else if(authException.getClass() == UsernameNotFoundException.class) {
-            return "잘못된 사용자 정보입니다. 다시 확인하세요.";
+            return "UsernameNotFoundException 잘못된 사용자 정보입니다. 다시 확인하세요.";
         }else if(authException.getClass() == AccountExpiredException.class) {
-            return "만료된 사용자 정보입니다. 다시 확인하세요.";
+            return "AccountExpiredException 만료된 사용자 정보입니다. 다시 확인하세요.";
         }else if(authException.getClass() == CredentialsExpiredException.class) {
-            return "인성서가 만료되었습니다. 관리자에게 문의하세요.";
+            return "CredentialsExpiredException 인증서가 만료되었습니다. 관리자에게 문의하세요.";
         }else if(authException.getClass() == DisabledException.class) {
-            return "비활성화된 사용자 정보입니다. 관리자에게 문의하세요.";
+            return "DisabledException 비활성화된 사용자 정보입니다. 관리자에게 문의하세요.";
         }else if(authException.getClass() == LockedException.class) {
-            return "암호 오류 5회 이상. 관리자에게 문의하세요.";
+            return "LockedException 암호 오류 5회 이상. 관리자에게 문의하세요.";
         }else {
             return "사용자 정보 오류.";
         }
