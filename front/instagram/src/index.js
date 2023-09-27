@@ -7,14 +7,17 @@ import { Global } from '@emotion/react';
 import { Common } from './Styles/Common';
 import { Reset } from 'styled-reset';
 import { BrowserRouter } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <RecoilRoot>
   <BrowserRouter>
     <Global styles = { Common }/>
     <Reset />
     <App />
   </BrowserRouter>
+  </RecoilRoot>
 );
 
 reportWebVitals();

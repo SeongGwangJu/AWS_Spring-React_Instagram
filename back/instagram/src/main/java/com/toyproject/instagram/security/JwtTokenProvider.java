@@ -35,10 +35,10 @@ public class JwtTokenProvider {
 		PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
 
 		//현재기준 +1시간의 객체 생성
-		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 30)); //1초 *60 *60 = 1시간
+//		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 30)); //1초 *60 *60 = 1시간
+		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24)); //1초 *60 *60 = 1시간
 		System.out.println(tokenExpiresDate);
 
-//		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24)); //1초 *60 *60 = 1시간
 		accessToken = Jwts.builder()
 				.setSubject("AccessToken")
 				.claim("username", principalUser.getUsername())
