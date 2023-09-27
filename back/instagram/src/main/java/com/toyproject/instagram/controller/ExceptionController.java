@@ -8,11 +8,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionController {
 
-
-	//예외처리
-	@ExceptionHandler(SignupException.class)
-	public ResponseEntity<?> SignupExceptionHandle(SignupException signupException) {
-		return ResponseEntity.badRequest().body(signupException.getErrorMap());
-
-	}
+    @ExceptionHandler(SignupException.class)
+    public ResponseEntity<?> signupExceptionHandle(SignupException signupException) {
+        return ResponseEntity.badRequest().body(signupException.getErrorMap());
+    }
 }
+
+
+
+
+
+
+
+
+

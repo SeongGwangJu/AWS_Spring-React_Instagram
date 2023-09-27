@@ -21,28 +21,28 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-	private final UserService userService;
+    private final UserService userService;
 
-	@PostMapping("/user")
-	public ResponseEntity<?> signup(@Valid @RequestBody SignupReqDto signupReqDto, BindingResult bindingResult) {
+    @PostMapping("/user")
+    public ResponseEntity<?> signup(@Valid @RequestBody SignupReqDto signupReqDto, BindingResult bindingResult) {
 
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			bindingResult.getFieldErrors().forEach(error -> {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			});
-			throw new SignupException(errorMap);
-		}
+        if(bindingResult.hasErrors()) {
+            Map<String, String> errorMap = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            });
+            throw new SignupException(errorMap);
+        }
 
-		userService.signupUser(signupReqDto);
-		return ResponseEntity.ok(null);
-	}
+        userService.signupUser(signupReqDto);
+        return ResponseEntity.ok(null);
+    }
 
-	@PostMapping("/login")
-	public ResponseEntity<?> signin(@RequestBody SigninReqDto signinReqDto) {
+    @PostMapping("/login")
+    public ResponseEntity<?> signin(@RequestBody SigninReqDto signinReqDto) {
 
-		userService.signinUser(signinReqDto);
+        userService.signinUser(signinReqDto);
 
-		return ResponseEntity.ok(null);
-	}
+        return ResponseEntity.ok(null);
+    }
 }
