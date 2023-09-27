@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.security.Principal;
@@ -42,8 +43,31 @@ public class JwtTokenProvider {
 				.setExpiration(tokenExpiresDate)
 				.signWith(key, SignatureAlgorithm.HS256)
 				.compact();
-		System.out.println(principalUser.getUsername());
-		System.out.println(principalUser.getPassword());
 		return  accessToken;
+	}
+
+	//토큰의 유효성 검사. 예외가 발생하지 않으면 유효 => true반환
+	public Boolean validateToken(String token) {
+		try {
+			//다시 복호화 + 토큰의 유효성 판단 => 못쓰면 예외로 처리, false 반환
+			Jwts.parserBuilder()
+					.setSigningKey(key)
+					.build()
+					.parseClaimsJws(token);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	public String convertToken(String bearerToken) {
+		String type = "Bearer ";
+
+		// null 인지 확인, 공백인지 확인
+		if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(type)) {
+			return bearerToken.substring(type.length()); //'bearer '글자수만큼 앞부분 짜른다
+		}
+		//??
+		return null;
 	}
 }

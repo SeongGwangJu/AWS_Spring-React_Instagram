@@ -7,10 +7,7 @@ import com.toyproject.instagram.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -43,5 +40,13 @@ public class AuthenticationController {
         String accessToken = userService.signinUser(signinReqDto);
 
         return ResponseEntity.ok(accessToken);
+    }
+
+    //Cl이 JWT 토큰을 포함한 Authorization 헤더로 요청을 보낼 때 호출되는 EndPoint
+    @GetMapping("/authenticate")
+    public ResponseEntity<?> authenticate(@RequestHeader(value = "Authorization") String authorization) {
+        System.out.println("토큰 : " + authorization);
+//        토큰 검증 후 결과에따라 응답 반환
+        return ResponseEntity.ok(false);
     }
 }

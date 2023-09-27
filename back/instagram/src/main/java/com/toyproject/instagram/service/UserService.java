@@ -3,6 +3,7 @@ package com.toyproject.instagram.service;
 import com.toyproject.instagram.dto.SigninReqDto;
 import com.toyproject.instagram.dto.SignupReqDto;
 import com.toyproject.instagram.entity.User;
+import com.toyproject.instagram.exception.JwtException;
 import com.toyproject.instagram.repository.UserMapper;
 import com.toyproject.instagram.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,16 @@ public class UserService {
         //JWT
         String accessToken = jwtTokenProvider.generateAccessToken(authentication);
         return accessToken;
+    }
 
+    //Proveider로 jwt토큰 검증. 유효하지 않으면 예외 던짐
+    public Boolean authenticate(String token) {
+        String accessToken = jwtTokenProvider.convertToken(token);
+        if(!jwtTokenProvider.validateToken(accessToken)) { //못쓰는 토큰이면(Boolean)
+            throw new JwtException("유효하지 않은 에세스 토큰입니다.");
+        }
+//        #####?
+        return null;
     }
 }
 

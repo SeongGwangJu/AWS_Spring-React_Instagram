@@ -11,3 +11,10 @@ export const signin = async (account) => {
     console.log(response);
     return response;
 }
+
+// 엔드포인트로 get요청. 반환된 응답을 반환함.
+export const authenticate = async () => {
+    const response = await instance.get("/api/v1/auth/authenticate");
+    console.log(response);
+    return response;
+}
