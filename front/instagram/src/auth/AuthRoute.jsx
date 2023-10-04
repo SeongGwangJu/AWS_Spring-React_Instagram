@@ -11,7 +11,8 @@ function AuthRoute({ element }) {
     const permitAllPath = ["/accounts"];
     const [ authenticated, setAuthenticated ] = useState(false);
     const authenticateState = useQuery(["authenticate"], authenticate, {
-        retry: 1
+        retry: 0,
+        refetchOnWindowFocus: false
         // onError: (error) => {
         //     console.log(error);
         //     console.log("error");

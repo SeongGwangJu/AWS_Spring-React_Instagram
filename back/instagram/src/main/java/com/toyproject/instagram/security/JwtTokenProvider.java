@@ -94,7 +94,7 @@ public class JwtTokenProvider {
 				.toString(); //다운캐스팅 대신 toString
 
 
-		System.out.println("usenrame : " username);
+		System.out.println("usenrame : " + username);
 
 		PrincipalUser principalUser = (PrincipalUser) principalDetailsService.loadUserByUsername(username);
 
