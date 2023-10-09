@@ -48,40 +48,41 @@ public class UserService {
         Matcher phoneMatcher = Pattern.compile("^[0-9]{11}+$")
                 .matcher(signupReqDto.getPhoneOrEmail());
 */
-        if (emailMatcher.matches()) {
+        if(emailMatcher.matches()) {
             user.setEmail(signupReqDto.getPhoneOrEmail());
         }
 
-        if (phoneMatcher.matches()) {
+        if(phoneMatcher.matches()) {
             user.setPhone(signupReqDto.getPhoneOrEmail());
         }
 
-        checkDuplicted(user);
+        checkDuplicated(user);
         userMapper.saveUser(user);
 
 //        Integer executeCount = userMapper.saveUser(user);
 //        System.out.println(executeCount);
     }
 
-    private void checkDuplicted(User user) {
-        if(StringUtils.hasText(user.getPhone())){
-            if(userMapper.findUserByPhone(user.getPhone()) != null) { //null이 아니다 -> 중복
+    private void checkDuplicated(User user) {
+        if(StringUtils.hasText(user.getPhone())) {
+            //null이 아니다 -> 중복
+            if(userMapper.findUserByPhone(user.getPhone()) != null) {
                 Map<String, String> errorMap = new HashMap<>();
                 errorMap.put("phone", "이미 사용중인 연락처입니다.");
                 throw new SignupException(errorMap);
             }
         }
-        if(StringUtils.hasText(user.getEmail())){
+        if(StringUtils.hasText(user.getEmail())) {
             if(userMapper.findUserByEmail(user.getEmail()) != null) {
                 Map<String, String> errorMap = new HashMap<>();
                 errorMap.put("email", "이미 사용중인 이메일입니다.");
                 throw new SignupException(errorMap);
             }
         }
-        if(StringUtils.hasText(user.getUsername())){
+        if(StringUtils.hasText(user.getUsername())) {
             if(userMapper.findUserByUsername(user.getUsername()) != null) {
                 Map<String, String> errorMap = new HashMap<>();
-                errorMap.put("username", "이미 사용중인 사용자 이름입니다.");
+                errorMap.put("username", "이미 사용중인 사용자이름입니다.");
                 throw new SignupException(errorMap);
             }
         }
@@ -98,10 +99,11 @@ public class UserService {
         return accessToken;
     }
 
-    //Proveider로 jwt토큰 검증. 유효하지 않으면 예외 던짐
+    //Provider로 jwt토큰 검증. 유효하지 않으면 예외 던짐
+
     public Boolean authenticate(String token) {
         String accessToken = jwtTokenProvider.convertToken(token);
-        if(!jwtTokenProvider.validateToken(accessToken)) { //못쓰는 토큰이면(Boolean)
+        if(!jwtTokenProvider.validateToken(accessToken)) {     //못쓰는 토큰이면(Boolean)
             throw new JwtException("사용자 정보가 만료되었습니다. 다시 로그인하세요.");
         }
         return true;

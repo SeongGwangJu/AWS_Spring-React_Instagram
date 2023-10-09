@@ -11,7 +11,7 @@ import {RiKakaoTalkFill} from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 
-function Signin(props) {
+function Signin() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 

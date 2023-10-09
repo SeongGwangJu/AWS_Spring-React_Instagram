@@ -19,7 +19,7 @@ function Home(props) {
 
     return (
         <RootContainer>
-            루트컨테이너 안의 텍스트
+            
         </RootContainer>
     );
 }

@@ -31,8 +31,10 @@ public class JwtTokenProvider {
 	// Value는 application.yml에서 변수 데이터를 자동 주입
 
 	//@Value : 컴포넌트가 IoC에서 생성될때 DI가 됨.
-	public JwtTokenProvider(@Value("${jwt.secret}") String secret, @Autowired PrincipalDetailsService principalDetailsService, @Autowired UserMapper userMapper) {
-		//Key값을 만들어줌
+	public JwtTokenProvider(@Value("${jwt.secret}") String secret,
+							@Autowired PrincipalDetailsService principalDetailsService,
+							@Autowired UserMapper userMapper) {
+		//key 값을 만들어줌
 		key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
 		this.principalDetailsService = principalDetailsService;
 		this.userMapper = userMapper;
@@ -46,7 +48,6 @@ public class JwtTokenProvider {
 		PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
 
 		//현재기준 +1시간의 객체 생성
-//		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 30)); //1초 *60 *60 = 1시간
 		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24)); //1초 *60 *60 = 1시간
 		System.out.println("tokenExpiresDate : " + tokenExpiresDate);
 
@@ -57,11 +58,11 @@ public class JwtTokenProvider {
 
 		User user = userMapper.findUserByPhone(principalUser.getUsername());
 
-		if (user != null) {
+		if(user != null) {
 			return jwtBuilder.claim("username", user.getUsername()).compact();
 		}
 		user = userMapper.findUserByEmail(principalUser.getUsername());
-		if (user != null) {
+		if(user != null) {
 			return jwtBuilder.claim("username", user.getUsername()).compact();
 		}
 		return jwtBuilder.claim("username", principalUser.getUsername()).compact();
@@ -88,7 +89,8 @@ public class JwtTokenProvider {
 
 		// null 인지 확인, 공백인지 확인
 		if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(type)) {
-			return bearerToken.substring(type.length()); //'bearer '글자수만큼 앞부분 짜른다
+			return bearerToken.substring(type.length());
+			//'bearer '글자수만큼 앞부분 짜른다
 		}
 		return "";
 	}
@@ -103,7 +105,8 @@ public class JwtTokenProvider {
 				.parseClaimsJws(accessToken)
 				.getBody()
 				.get("username")
-				.toString(); //다운캐스팅 대신 toString
+				.toString();
+				//다운캐스팅 대신 toString
 
 
 		System.out.println("usenrame : " + username);
