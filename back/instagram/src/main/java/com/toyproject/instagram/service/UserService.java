@@ -33,21 +33,21 @@ public class UserService {
     public void signupUser(SignupReqDto signupReqDto) {
         User user = signupReqDto.toUserEntity(passwordEncoder);
 
-        String emailPattern = "^[a-zA-Z0-9]+@[0-9a-zA-Z]+\\.[a-z]*$";
-        String phonePattern = "^[0-9]{11}+$";
+//        String emailPattern = "^[a-zA-Z0-9]+@[0-9a-zA-Z]+\\.[a-z]*$";
+//        String phonePattern = "^[0-9]{11}+$";
+//
+//        Pattern emailRegex = Pattern.compile(emailPattern);
+//        Pattern phoneRegex = Pattern.compile(phonePattern);
+//
+//        Matcher emailMatcher = emailRegex.matcher(signupReqDto.getPhoneOrEmail());
+//        Matcher phoneMatcher = phoneRegex.matcher(signupReqDto.getPhoneOrEmail());
 
-        Pattern emailRegex = Pattern.compile(emailPattern);
-        Pattern phoneRegex = Pattern.compile(phonePattern);
-
-        Matcher emailMatcher = emailRegex.matcher(signupReqDto.getPhoneOrEmail());
-        Matcher phoneMatcher = phoneRegex.matcher(signupReqDto.getPhoneOrEmail());
-
-/* 위를 4줄로 표현
+// 위를 4줄로 표현
         Matcher emailMatcher = Pattern.compile("^[a-zA-Z0-9]+@[0-9a-zA-Z]+\\.[a-z]*$")
                 .matcher(signupReqDto.getPhoneOrEmail());
         Matcher phoneMatcher = Pattern.compile("^[0-9]{11}+$")
                 .matcher(signupReqDto.getPhoneOrEmail());
-*/
+
         if(emailMatcher.matches()) {
             user.setEmail(signupReqDto.getPhoneOrEmail());
         }

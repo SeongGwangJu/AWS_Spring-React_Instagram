@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.jar.JarException;
-
 @RestControllerAdvice
 public class ExceptionController {
 
@@ -17,7 +15,8 @@ public class ExceptionController {
         return ResponseEntity.badRequest().body(signupException.getErrorMap());
     }
 
-    @ExceptionHandler(JwtException.class) //SignupException가 발생한 경우 호출
+    //SignupException가 발생한 경우 호출
+    @ExceptionHandler(JwtException.class)
     public ResponseEntity<?> jwtExceptionHandle(JwtException jwtException) {
         return ResponseEntity.badRequest().body(jwtException.getMessage());
     }
