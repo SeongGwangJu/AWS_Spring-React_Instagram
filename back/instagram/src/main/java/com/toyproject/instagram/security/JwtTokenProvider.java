@@ -64,7 +64,7 @@ public class JwtTokenProvider {
 		if (user != null) {
 			return jwtBuilder.claim("username", user.getUsername()).compact();
 		}
-		return jwtBuilder.claim("username", user.getUsername()).compact();
+		return jwtBuilder.claim("username", principalUser.getUsername()).compact();
 
 
 	}
@@ -90,7 +90,6 @@ public class JwtTokenProvider {
 		if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(type)) {
 			return bearerToken.substring(type.length()); //'bearer '글자수만큼 앞부분 짜른다
 		}
-		//??
 		return "";
 	}
 
@@ -112,7 +111,7 @@ public class JwtTokenProvider {
 		PrincipalUser principalUser = (PrincipalUser) principalDetailsService.loadUserByUsername(username);
 
 		//param : principal, credentials, authorities 순.
-		authentication = new UsernamePasswordAuthenticationToken(principalUser, null, null);
+		authentication = new UsernamePasswordAuthenticationToken(principalUser, null, principalUser.getAuthorities());
 		return authentication;
 	}
 }

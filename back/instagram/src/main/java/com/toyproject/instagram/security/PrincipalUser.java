@@ -14,7 +14,7 @@ public class PrincipalUser implements UserDetails {
 
     private String phoneOrEmailOrUsername;
     private String password;
-    public List<Authority> authorities;
+    private List<Authority> authorities;
 
     public PrincipalUser(String phoneOrEmailOrUsername, String password, List<Authority> authorities) {
         this.phoneOrEmailOrUsername = phoneOrEmailOrUsername;

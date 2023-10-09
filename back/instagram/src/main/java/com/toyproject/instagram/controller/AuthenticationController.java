@@ -39,7 +39,7 @@ public class AuthenticationController {
     public ResponseEntity<?> signin(@RequestBody SigninReqDto signinReqDto) {
         String accessToken = userService.signinUser(signinReqDto);
 
-        return ResponseEntity.ok(accessToken);
+        return ResponseEntity.ok().body(accessToken);
     }
 
     //Cl이 JWT 토큰을 포함한 Authorization 헤더로 요청을 보낼 때 호출되는 EndPoint
