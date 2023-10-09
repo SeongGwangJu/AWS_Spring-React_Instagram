@@ -2,6 +2,7 @@ import React from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from './Style'
 import { getUser } from '../../apis/api/user';
+import RootContainer from '../../components/Containers/RootContainer/RootContainer';
 import jwt_decode from "jwt-decode";
 
 function Home(props) {
@@ -17,9 +18,9 @@ function Home(props) {
     }
 
     return (
-        <div>
-            welcome~ you are correct. perfect!
-        </div>
+        <RootContainer>
+            루트컨테이너 안의 텍스트
+        </RootContainer>
     );
 }
 
