@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import Loading from '../components/Loading/Loading';
 
 function AuthRoute({ element }) {
+
     const navigate = useNavigate();
     const location = useLocation();
     const pathname = location.pathname;
@@ -12,11 +13,7 @@ function AuthRoute({ element }) {
     const [ authenticated, setAuthenticated ] = useState(false);
     const authenticateState = useQuery(["authenticate"], authenticate, {
         retry: 0,
-        refetchOnWindowFocus: false
-        // onError: (error) => {
-        //     console.log(error);
-        //     console.log("error");
-        // }
+        refetchOnWindowFocus: false,
     });
 
     if(authenticateState.isLoading) {
@@ -32,7 +29,7 @@ function AuthRoute({ element }) {
         for(let path of permitAllPath) {
 
             if(pathname.startsWith(path)) {
-                // return element; //경로와 같으면
+                return element; //경로와 같으면
             }
         }
         // navigate("/accounts/login"); //같지 않으면

@@ -40,7 +40,7 @@ function Signin(props) {
             const response = await signin(account);
             localStorage.setItem("accessToken", "Bearer " + response.data);
             //
-            window.location.reload();
+            // window.location.reload();
             console.log(localStorage.getItem("accessToken"))
             queryClient.invalidateQueries(["authenticate"]);
             navigate("/");
