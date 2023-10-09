@@ -9,9 +9,11 @@ import OrBar from '../../components/SigninAndUpLayout/OrBar/OrBar';
 import { signin } from '../../apis/api/account';
 import {RiKakaoTalkFill} from 'react-icons/ri';
 import { Link } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
 
 function Signin(props) {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     const emptyAccount = {
         phoneOrEmailOrUsername: "",
@@ -35,7 +37,13 @@ function Signin(props) {
 
     const handleSigninSubmit = async () => {
         try {
-            await signin(account);
+            const response = await signin(account);
+            localStorage.setItem("accessToken", "Bearer " + response.data);
+            //
+            // window.location.reload();
+            console.log(localStorage.getItem("accessToken"))
+            queryClient.invalidateQueries(["authenticate"]);
+            navigate("/");
         } catch(error) {
             setErrorMsg(error.response.data.errorMessage);
         }

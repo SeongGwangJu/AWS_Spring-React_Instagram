@@ -6,6 +6,7 @@ import { Reset } from 'styled-reset';
 import Signup from './pages/Signup/Signup';
 import Signin from './pages/Signin/Signin';
 import AuthRoute from './auth/AuthRoute';
+import Home from './pages/Home/Home';
 
 function App(props) {
   return (
@@ -13,10 +14,9 @@ function App(props) {
       {/* <Sidebar /> */}
       <Reset />
       <Routes>
-        <Route path='' element={<Signin />} />
-        <Route path='/accounts/emailsignup' element={<Signup />} />
-        <Route path='' element={<Signup />} />
-        <Route path='/accounts/login' element={ <AuthRoute element={ <Signin/> }/> } />
+        <Route path='/' element={ <AuthRoute element={ <Home />} /> } />
+        <Route path='/accounts/emailsignup' element={ <Signup /> } />
+        <Route path='/accounts/login' element={ <Signin />} />
         <Route path='/:username' element={<div></div>} />
         <Route path='/explore' element={<div></div>} />
       </Routes>
